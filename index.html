@@ -780,7 +780,7 @@
                 </div>
                 <div class="field-block">
                     <label class="field-label" for="respondentEmail">Email</label>
-                    <input class="field-input" type="email" id="respondentEmail" placeholder="jane@school.edu">
+                    <input class="field-input" type="email" id="respondentEmail" placeholder="jane@school.edu" required>
                 </div>
             </div>
             <label class="consent-line">
@@ -1023,17 +1023,25 @@
     // "Share my results" is a separate, optional action taken from inside the
     // report itself — the quiz result displays regardless of whether the
     // respondent chooses to share their name and email.
-    document.getElementById('sendReportBtn').addEventListener('click', () => {
+    //Checks email is correct format
+  document.getElementById('sendReportBtn').addEventListener('click', () => {
         const respondentName = document.getElementById('respondentName').value.trim();
         const respondentEmail = document.getElementById('respondentEmail').value.trim();
         const consentGiven = document.getElementById('consentCheckbox').checked;
         const statusEl = document.getElementById('submit-status');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!respondentName || !respondentEmail) {
             statusEl.textContent = "Please enter your name and email.";
             statusEl.className = "submit-status error";
             return;
         }
+
+if (!emailPattern.test(respondentEmail)) {
+        statusEl.textContent = "Please enter a valid email address.";
+        statusEl.className = "submit-status error";
+        return;
+    }
 
         if (!consentGiven) {
             statusEl.textContent = "Please agree to the Privacy Policy and Terms of Use to continue.";
